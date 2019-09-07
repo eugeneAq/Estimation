@@ -2,8 +2,8 @@ import React from "react";
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import MenuItem from "@material-ui/core/MenuItem";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles(theme => ({
@@ -27,6 +27,9 @@ const useStyles = makeStyles(theme => ({
   },
   menu: {
     width: 200
+  },
+  paper: {
+    textAlign: "center"
   }
 }));
 
@@ -45,8 +48,14 @@ export default function DenseAppBar() {
   const classes = useStyles();
 
   const [values, setValues] = React.useState({
+    releaseNumber: "",
     projectName: "",
-    startDate: ""
+    projectManagerEmail: "",
+    requestorEmail: "",
+    startDate: "",
+    endDate: "",
+    cartStatus: "New",
+    cartID: "XXX-XXX-XXXX"
   });
 
   const handleChange = name => event => {
@@ -57,43 +66,117 @@ export default function DenseAppBar() {
     <div className={classes.root}>
       <ThemeProvider theme={theme}>
         {/* Cart Detasils Form */}
-        <form className={classes.container} noValidate autoComplete="off">
-          <TextField
-            required
-            id="projectName"
-            label="Project Name"
-            className={classes.textField}
-            defaultValue="Project Name"
-            onChange={handleChange("projectName")}
-            error={(values.projectName === "")}
-            helperText={values.projectName.valueof === "%20" ? "Empty field!" : " "}
-            margin="normal"
-            variant="outlined"
-            placeholder="Project Name"
-          />
-          <TextField
-            id="startDate"
-            type="date"
-            label="startDate"
-            className={classes.textField}
-            onChange={handleChange("startDate")}
-            error={values.startDate === ""}
-            margin="normal"
-            variant="outlined"
-            placeholder="Start Date"
-          />
+        <Paper className={classes.paper}>
+          <form className={classes.container} noValidate autoComplete="off">
+            <Grid
+              container
+              direction="row"
+              justify="space-around"
+              alignItems="center"
+            >
+              <Grid item xs={4} margin="normal">
+                <Typography>Cart Status: {values.cartStatus}</Typography>
+              </Grid>
+              <Grid item xs={4} />
+              <Grid item xs={4}>
+                <Typography>Cart ID: {values.cartID}</Typography>
+              </Grid>
 
-          <TextField
-            id="projectName"
-            label="Project Name"
-            className={classes.textField}
-            value={values.projectName}
-            onChange={handleChange("name")}
-            margin="normal"
-            variant="outlined"
-            placeholder="Project Name"
-          />
-        </form>
+              <Grid item xs={4}>
+                <TextField
+                  required
+                  id="releaseNumber"
+                  label="Release/TEBR#"
+                  className={classes.textField}
+                  onChange={handleChange("releaseNumber")}
+                  error={values.releaseNumber === ""}
+                  helperText={values.releaseNumber === "" ? "Empty field!" : ""}
+                  margin="dense"
+                  variant="outlined"
+                  placeholder="Release/TEBR#"
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  required
+                  id="projectName"
+                  label="Project Name"
+                  className={classes.textField}
+                  onChange={handleChange("projectName")}
+                  error={values.projectName === ""}
+                  helperText={values.projectName === "" ? "Empty field!" : ""}
+                  margin="dense"
+                  variant="outlined"
+                  placeholder="Project Name"
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  required
+                  type="email"
+                  id="projectManagerEmail"
+                  label="Project Manager Email"
+                  className={classes.textField}
+                  onChange={handleChange("projectManagerEmail")}
+                  error={values.projectManagerEmail === ""}
+                  helperText={
+                    values.projectManagerEmail === "" ? "Empty field!" : ""
+                  }
+                  margin="dense"
+                  variant="outlined"
+                  placeholder="Project Manager Email"
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  required
+                  type="email"
+                  id="requestorEmail"
+                  label="Requestor Email"
+                  className={classes.textField}
+                  onChange={handleChange("requestorEmail")}
+                  error={values.requestorEmail === ""}
+                  helperText={
+                    values.requestorEmail === "" ? "Empty field!" : ""
+                  }
+                  margin="dense"
+                  variant="outlined"
+                  placeholder="Requestor Email"
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  required
+                  id="startDate"
+                  type="date"
+                  label="Start Date"
+                  className={classes.textField}
+                  onChange={handleChange("startDate")}
+                  error={values.projectName === ""}
+                  helperText={values.startDate === "" ? "Empty field!" : ""}
+                  margin="dense"
+                  variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  required
+                  id="endDate"
+                  type="date"
+                  label="End Date"
+                  className={classes.textField}
+                  onChange={handleChange("endDate")}
+                  error={values.endDate === ""}
+                  helperText={values.projectName === "" ? "Empty field!" : ""}
+                  margin="dense"
+                  variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                />
+              </Grid>
+            </Grid>
+          </form>
+        </Paper>
       </ThemeProvider>
     </div>
   );
